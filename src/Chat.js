@@ -25,8 +25,7 @@ const Chat = ({ socket }) => {
         { from: from, msg, private: true }
       ]);
     });
-
-    // Listen for errors in private messages (e.g., user not found)
+    // Listen for errors in private messages (e.g., user not fou
     socket.on('private message error', ({ msg }) => {
       alert(msg);  // Show alert if user not found
     });
