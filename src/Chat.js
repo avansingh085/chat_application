@@ -5,7 +5,7 @@ import { setMessageChat } from './globalSlice';
 
 const Chat = ({ socket }) => {
   const [message, setMessage] = useState('');
-  const receiver = useSelector((state) => state.Chat.CurrChat); // Current chat receiver
+  const receiver = useSelector((state) => state.Chat?.CurrChat); // Current chat receiver
   const messages = useSelector((state) => state.Chat.Message) || []; // Messages array
   const clientMobile = useSelector((state) => state.Chat.Mobile); // Client's mobile number
   const dispatch = useDispatch();
@@ -82,8 +82,8 @@ const Chat = ({ socket }) => {
       {/* Messages Section */}
       <div className="flex-1 overflow-y-auto p-4 bg-white thin-scrollbar">
         {messages.map((msg, index) => (
-          (msg.from === clientMobile && msg.receiver === receiver.mobile ||
-          msg.from === receiver.mobile && msg.receiver === clientMobile) && (
+          ((msg.from === clientMobile && msg.receiver === receiver.mobile) ||
+          (msg.from === receiver.mobile && msg.receiver === clientMobile)) && (
             <Message key={`${msg.from}-${index}`} from={msg.from} message={msg.message} />
           )
         ))}
