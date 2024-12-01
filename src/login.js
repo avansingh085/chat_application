@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setLogin, setMobile,setContact ,setMessageChat} from './globalSlice';
 import { useNavigate } from 'react-router-dom';
-import PDFReader from './pdfReader.js'
 const LoginBox = ({ socket }) => {
     const [isSignIn, setIsSignIn] = useState(true); 
     const [formData, setFormData] = useState({
@@ -153,7 +152,7 @@ const LoginBox = ({ socket }) => {
                 </button>
             </form>
           
-        <PDFReader/>
+       
 
     
        
