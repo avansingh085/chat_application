@@ -19,7 +19,7 @@ const Chat = ({ socket }) => {
     // Handle receiving private messages
     const handlePrivateMessage = ({ from, message, receiver }) => {
       const updatedMessages = [...messages, { from, message, receiver }];
-      dispatch(setMessageChat(updatedMessages));
+      dispatch(setMessageChat(updatedMessages)); // Update the Redux store with the new message
     };
 
     // Handle errors for private messages
@@ -38,7 +38,7 @@ const Chat = ({ socket }) => {
       socket.off('private message', handlePrivateMessage);
       socket.off('private message error', handlePrivateMessageError);
     };
-  }, [socket, dispatch, clientMobile, messages]);
+  }, [socket, dispatch, receiver, clientMobile]); // No need to include 'messages' here
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -65,6 +65,13 @@ const Chat = ({ socket }) => {
     setMessage(''); // Clear input field
   };
 
+  // Filter messages for the current chat
+  const filteredMessages = messages.filter(
+    (msg) =>
+      (msg.from === clientMobile && msg.receiver === receiver.mobile) ||
+      (msg.from === receiver.mobile && msg.receiver === clientMobile)
+  );
+
   return (
     <div className="w-full max-w-screen-lg mx-auto h-screen flex flex-col bg-gray-100 rounded-lg shadow-xl border">
       {/* Chat Header */}
@@ -81,11 +88,8 @@ const Chat = ({ socket }) => {
 
       {/* Messages Section */}
       <div className="flex-1 overflow-y-auto p-4 bg-white thin-scrollbar">
-        {messages.map((msg, index) => (
-          ((msg.from === clientMobile && msg.receiver === receiver.mobile) ||
-          (msg.from === receiver.mobile && msg.receiver === clientMobile)) && (
-            <Message key={`${msg.from}-${index}`} from={msg.from} message={msg.message} />
-          )
+        {filteredMessages.map((msg, index) => (
+          <Message key={`${msg.from}-${index}`} from={msg.from} message={msg.message} />
         ))}
       </div>
 
