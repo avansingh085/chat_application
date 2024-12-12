@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Message from './Message';
 import { setMessageChat } from './globalSlice';
@@ -7,12 +7,15 @@ const Chat = ({ socket }) => {
   const [message, setMessage] = useState('');
   const receiver = useSelector((state) => state.Chat?.CurrChat); // Current chat receiver
   const clientMobile = useSelector((state) => state.Chat.Mobile); // Client's mobile number
+  const messages = useSelector((state) => state.Chat.Message) || []; // Get messages from store
   const dispatch = useDispatch();
 
-  // Memoize 'messages' to avoid unnecessary re-renders
-  const messages = useMemo(() => {
-    return useSelector((state) => state.Chat.Message) || []; // Fetch 'messages' only once
-  }, []); // Empty dependency array ensures this value is only set once
+  // Filter messages for the current chat
+  const filteredMessages = messages.filter(
+    (msg) =>
+      (msg.from === clientMobile && msg.receiver === receiver.mobile) ||
+      (msg.from === receiver.mobile && msg.receiver === clientMobile)
+  );
 
   useEffect(() => {
     // Handle receiving public messages
@@ -42,7 +45,7 @@ const Chat = ({ socket }) => {
       socket.off('private message', handlePrivateMessage);
       socket.off('private message error', handlePrivateMessageError);
     };
-  }, [socket, dispatch, receiver, clientMobile]); // 'messages' is no longer in the dependencies
+  }, [socket, dispatch, receiver, clientMobile, messages]); // Add 'messages' to dependencies
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -68,13 +71,6 @@ const Chat = ({ socket }) => {
 
     setMessage(''); // Clear input field
   };
-
-  // Filter messages for the current chat
-  const filteredMessages = messages.filter(
-    (msg) =>
-      (msg.from === clientMobile && msg.receiver === receiver.mobile) ||
-      (msg.from === receiver.mobile && msg.receiver === clientMobile)
-  );
 
   return (
     <div className="w-full max-w-screen-lg mx-auto h-screen flex flex-col bg-gray-100 rounded-lg shadow-xl border">
