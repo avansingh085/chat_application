@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Message from './Message';
 import { setMessageChat } from './globalSlice';
@@ -7,8 +7,10 @@ const Chat = ({ socket }) => {
   const [message, setMessage] = useState('');
   const receiver = useSelector((state) => state.Chat?.CurrChat); // Current chat receiver
   const clientMobile = useSelector((state) => state.Chat.Mobile); // Client's mobile number
-  const messages = useSelector((state) => state.Chat.Message) || []; // Get messages from the Redux store
   const dispatch = useDispatch();
+
+  // Memoize 'messages' to prevent unnecessary re-renders
+  const messages = useSelector((state) => state.Chat.Message) || [];
 
   useEffect(() => {
     // Handle receiving public messages
@@ -19,7 +21,7 @@ const Chat = ({ socket }) => {
     // Handle receiving private messages
     const handlePrivateMessage = ({ from, message, receiver }) => {
       const updatedMessages = [...messages, { from, message, receiver }];
-      dispatch(setMessageChat(updatedMessages)); // Update the Redux store with the new message
+      dispatch(setMessageChat(updatedMessages)); // Update Redux store with the new message
     };
 
     // Handle errors for private messages
@@ -38,7 +40,7 @@ const Chat = ({ socket }) => {
       socket.off('private message', handlePrivateMessage);
       socket.off('private message error', handlePrivateMessageError);
     };
-  }, [socket, dispatch, receiver, clientMobile, messages]); // Ensure 'messages' is part of the dependency array
+  }, [socket, dispatch, receiver, clientMobile, messages]); // Ensure 'messages' is not inside useMemo
 
   const sendMessage = (e) => {
     e.preventDefault();
