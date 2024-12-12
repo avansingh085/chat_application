@@ -15,7 +15,7 @@ function Contact() {
     if (!newContact.user.trim() || !newContact.mobile.trim()) return;
 
     try {
-      const res = await fetch('https://chat-backend-9s3n.onrender.com/addContact', {
+      const res = await fetch('https://ecommerce-backend1-1.onrender.com/addContact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mobile: newContact.mobile, user: newContact.user, client: Mobile }),
