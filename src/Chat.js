@@ -38,7 +38,7 @@ const Chat = ({ socket }) => {
       socket.off('private message', handlePrivateMessage);
       socket.off('private message error', handlePrivateMessageError);
     };
-  }, [socket, dispatch, receiver, clientMobile]); // No need to include 'messages' here
+  }, [socket, dispatch, receiver, clientMobile, messages]); // Added 'messages' as a dependency
 
   const sendMessage = (e) => {
     e.preventDefault();
