@@ -9,8 +9,10 @@ const Chat = ({ socket }) => {
   const clientMobile = useSelector((state) => state.Chat.Mobile); // Client's mobile number
   const dispatch = useDispatch();
 
-  // Memoize 'messages' to prevent unnecessary re-renders
-  const messages = useSelector((state) => state.Chat.Message) || [];
+  // Memoize 'messages' to avoid unnecessary re-renders
+  const messages = useMemo(() => {
+    return useSelector((state) => state.Chat.Message) || []; // Fetch 'messages' only once
+  }, []); // Empty dependency array ensures this value is only set once
 
   useEffect(() => {
     // Handle receiving public messages
@@ -40,7 +42,7 @@ const Chat = ({ socket }) => {
       socket.off('private message', handlePrivateMessage);
       socket.off('private message error', handlePrivateMessageError);
     };
-  }, [socket, dispatch, receiver, clientMobile, messages]); // Ensure 'messages' is not inside useMemo
+  }, [socket, dispatch, receiver, clientMobile]); // 'messages' is no longer in the dependencies
 
   const sendMessage = (e) => {
     e.preventDefault();
