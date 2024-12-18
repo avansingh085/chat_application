@@ -15,14 +15,14 @@ function Contact() {
     if (!newContact.user.trim() || !newContact.mobile.trim()) return;
 
     try {
-      const res = await fetch('http://chat-backend-9s3n.onrender.com/addContact', {
+      const res = await fetch('https://chat-backend-9s3n.onrender.com/addContact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mobile: newContact.mobile, user: newContact.user, client: Mobile }),
       });
       const res1 = await res.json();
       if (res1.success) {
-        dispatch(setAddContact(newContact)); // Add new contact to Redux state
+        dispatch(setAddContact(newContact)); 
         setNewContact({ user: '', mobile: '' }); // Reset form fields
         setShowAddForm(false); // Hide the form
       } else {
