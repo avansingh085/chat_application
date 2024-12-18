@@ -23,8 +23,8 @@ const LoginBox = ({ socket }) => {
 
         try {
             const url = isSignIn
-                ? 'https://chat-backend-9s3n.onrender.com/login'
-                : 'https://chat-backend-9s3n.onrender.com/sign_up';
+                ? 'http://chat-backend-9s3n.onrender.com/login'
+                : 'http://chat-backend-9s3n.onrender.com/sign_up';
 
             const data = {
                 mobile: formData.mobile.trim(),
