@@ -6,7 +6,6 @@ const Message = ({ from, message, timestamp }) => {
 
   const isClientMessage = from === clientMobile;
 
-  // Format the timestamp if provided
   const formattedTime = timestamp
     ? new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     : new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });

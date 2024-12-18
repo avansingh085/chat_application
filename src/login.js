@@ -57,8 +57,8 @@ const LoginBox = ({ socket }) => {
                 alert(result.result || 'An error occurred.');
             }
         } catch (err) {
-            console.error('Fetch Error:', err);
-            alert('Something went wrong. Please try again.');
+            console.log('Fetch Error:', err);
+            
         }
     };
 
