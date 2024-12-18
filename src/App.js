@@ -6,8 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import {setSocket} from './globalSlice.js';
 import { useEffect } from 'react';
 import {io} from 'socket.io-client'
-//wss://chat-backend-9s3n.onrender.com
-const socket = io("ws://chat-backend-9s3n.onrender.com")
+const socket = io("http://chat-backend-9s3n.onrender.com")
 function App() {
   return (
     <BrowserRouter>
