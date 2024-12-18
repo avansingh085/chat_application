@@ -7,7 +7,7 @@ import {setSocket} from './globalSlice.js';
 import { useEffect } from 'react';
 import {io} from 'socket.io-client'
 //https://chat-backend-9s3n.onrender.com
-const socket = io("https://chat-backend-9s3n.onrender.com", {
+const socket = io("wss://chat-backend-9s3n.onrender.com", {
   transports: ['websocket'], 
   reconnection: true,
   debug: true,
