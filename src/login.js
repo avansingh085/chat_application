@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setLogin, setMobile,setContact ,setMessageChat} from './globalSlice';
+import { setLogin, setMobile,setContact ,setUser,setMessageChat} from './globalSlice';
 import { useNavigate } from 'react-router-dom';
 const LoginBox = ({ socket }) => {
     const [isSignIn, setIsSignIn] = useState(true); 
+    
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -23,8 +24,8 @@ const LoginBox = ({ socket }) => {
 
         try {
             const url = isSignIn
-                ? 'https://chat-backend-9s3n.onrender.com/login'
-                : 'https://chat-backend-9s3n.onrender.com/sign_up';
+                ? 'http://localhost:3001/login'
+                : 'http://localhost:3001/sign_up';
 
             const data = {
                 mobile: formData.mobile.trim(),
@@ -47,12 +48,13 @@ const LoginBox = ({ socket }) => {
                 dispatch(setLogin(1));
                 dispatch(setContact(result.Contact))
                 dispatch(setMessageChat(result.Message));
-
+                dispatch(setUser(result));
                 if (socket) {
                     socket.emit('new user', formData.mobile.trim());
                 }
-
+    
                 navigate('/Chat');
+                
             } else {
                 alert(result.result || 'An error occurred.');
             }

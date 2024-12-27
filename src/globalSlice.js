@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   CurrChat: { name: '1111', mobile: '1111', messages: [] },
+  User:{},
   Login: 0,
   Username: "",
   Password: "",
@@ -19,6 +20,9 @@ const itemsSlice = createSlice({
     },
     setLogin: (state, action) => {
       state.Login = action.payload;
+    },
+    setUser:(state,action)=>{
+      state.User=action.payload;
     },
     setPassword: (state, action) => {
       state.Password = action.payload;
@@ -44,5 +48,5 @@ const itemsSlice = createSlice({
   },
 });
 
-export const { setUserName, setAddContact,setContact,setMessageChat, setLogin, setCurrChat, setPassword, setEmail, setMobile } = itemsSlice.actions;
+export const { setUserName,setUser, setAddContact,setContact,setMessageChat, setLogin, setCurrChat, setPassword, setEmail, setMobile } = itemsSlice.actions;
 export default itemsSlice.reducer;

@@ -22,18 +22,18 @@ const Message = ({ from, message, timestamp }) => {
         }`}
         style={{
           wordBreak: 'break-word',
-          maxWidth: '80%', // Keeps messages compact
+          maxWidth: '80%', 
         }}
       >
-        {/* Sender Info */}
+       
         {!isClientMessage && (
           <p className="text-xs font-bold text-gray-500 mb-1">{from}</p>
         )}
 
-        {/* Message Text */}
+       
         <p className="text-sm leading-normal">{message}</p>
 
-        {/* Timestamp */}
+      
         <p
           className={`mt-2 text-xs ${
             isClientMessage ? 'text-green-600' : 'text-gray-600'

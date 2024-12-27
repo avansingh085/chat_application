@@ -3,6 +3,8 @@ import io from 'socket.io-client';
 import './index.css';
 import Chat from './Chat.js'
 import LoginBox from './login.js';
+import ServerStatus from "./Admin/ServerStatus"; 
+import UserDetails from "./Admin/UserStatus";
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import {setLogin,setUserName} from './globalSlice.js'
@@ -17,6 +19,8 @@ function App({socket}) {
       <Routes>
         <Route path='/' element={<LoginBox socket={socket}/>}/>
         <Route path='/Chat' element={<ChatMessage socket={socket}/>}/>
+        <Route path="/Admin/ServerStatus" element={<ServerStatus />} /> 
+        <Route path="/Admin/UserDetails" element={<UserDetails />} /> 
       </Routes>
       
     </div>
